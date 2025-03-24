@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>🎯 You've Won the Auction!</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f8;
+            color: #333;
+            text-align: center;
+            padding: 40px;
+        }
+        .email-container {
+            background-color: #ffffff;
+            border: 2px solid #4CAF50;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            max-width: 500px;
+            margin: auto;
+            padding: 20px;
+        }
+        h2 {
+            color: #4CAF50;
+        }
+        .details {
+            background-color: #e8f5e9;
+            border: 1px solid #4CAF50;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        .btn-complete {
+            display: inline-block;
+            background-color: #4CAF50;
+            color: #ffffff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            margin-top: 15px;
+        }
+        .footer {
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <h2>🎉 Congratulations {{ winner.username }}!</h2>
+        <p>You've successfully won the auction: <strong>{{ auction.title }}</strong></p>
+        <div class="details">
+            <p><strong>Description:</strong> {{ auction.description }}</p>
+            <p><strong>Winning Bid:</strong> ₹{{ auction.get_winning_bid.amount }}</p>
+        </div>
+        <p>Please complete the payment to secure your win.</p>
+        <a href="{{ payment_link }}" class="btn-complete">Complete Payment</a>
+        <p class="footer">If you have any questions, feel free to reach out to our support team.</p>
+    </div>
+</body>
+</html>

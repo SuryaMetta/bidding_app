@@ -1,0 +1,59 @@
+{% extends 'bidding/base.html' %}
+
+{% block content %}
+<div style="
+    background-color: #1a1a2e; 
+    color: #e0e0f8; 
+    padding: 20px; 
+    border-radius: 12px; 
+    box-shadow: 0 4px 15px rgba(138, 43, 226, 0.8);">
+
+    <h2 style="text-align: center; color: #9d4edd;">Search Auctions</h2>
+
+    <form method="GET" action="{% url 'auction_search' %}" style="
+        display: flex; 
+        gap: 10px; 
+        margin-bottom: 20px;">
+        <input type="text" name="q" placeholder="Search auctions..." value="{{ query }}" 
+            style="
+                flex: 1; 
+                padding: 10px; 
+                border: 2px solid #5a189a; 
+                border-radius: 8px; 
+                background-color: #0f3460; 
+                color: #e0e0f8;">
+        <button type="submit" style="
+                background-color: #7209b7; 
+                color: #fff; 
+                border: none; 
+                padding: 10px 20px; 
+                border-radius: 8px; 
+                cursor: pointer; 
+                transition: background 0.3s;">
+            Search
+        </button>
+    </form>
+
+    {% if results %}
+    <ul style="
+        list-style: none; 
+        padding: 0;">
+        {% for auction in results %}
+            <li style="
+                background-color: #240046; 
+                margin-bottom: 10px; 
+                padding: 10px; 
+                border-radius: 8px; 
+                box-shadow: 0 2px 8px rgba(255, 0, 255, 0.3);">
+                <a href="{% url 'auction_detail' auction.id %}" 
+                    style="color: #c77dff; text-decoration: none;">
+                    {{ auction.title }}</a> 
+                - {{ auction.description|truncatewords:20 }}
+            </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+        <p style="text-align: center; color: #ff4d6d;">No results found.</p>
+    {% endif %}
+</div>
+{% endblock %}

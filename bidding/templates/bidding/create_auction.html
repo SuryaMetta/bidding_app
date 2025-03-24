@@ -1,0 +1,109 @@
+{% extends "bidding/base.html" %}
+{% load static %}
+
+{% block content %}
+<div style="
+    background: #1A1A40;
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 4px 15px rgba(58, 12, 163, 0.8);
+    color: #E0AAFF;
+    margin: 20px;">
+
+    <h1 style="
+        text-align: center;
+        color: #9D4EDD;
+        margin-bottom: 20px;
+    ">
+        Create a New Auction
+    </h1>
+
+    <form method="post" style="
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    ">
+        {% csrf_token %}
+
+        {% if form.errors %}
+            <div style="
+                background-color: #5A189A;
+                border: 1px solid #9D4EDD;
+                color: #FF4D6D;
+                padding: 10px;
+                border-radius: 8px;
+                margin-bottom: 15px;
+            ">
+                Please fix the errors below.
+            </div>
+        {% endif %}
+
+        {% for field in form %}
+        <div style="display: flex; align-items: center; gap: 10px;">
+            <label for="{{ field.id_for_label }}" style="
+                color: #C77DFF;
+                font-weight: bold;
+                width: 150px;
+            ">{{ field.label }}:</label>
+            {{ field }}
+        </div>
+        <script>
+            document.getElementById("{{ field.id_for_label }}").style.cssText = `
+                background-color: #240046;
+                border: 2px solid #9D4EDD;
+                color: #E0AAFF;
+                padding: 10px 12px;
+                border-radius: 8px;
+                width: 100%;
+                transition: box-shadow 0.3s ease;
+            `;
+
+            document.getElementById("{{ field.id_for_label }}").addEventListener("focus", function() {
+                this.style.boxShadow = "0 0 15px #C77DFF";
+            });
+
+            document.getElementById("{{ field.id_for_label }}").addEventListener("blur", function() {
+                this.style.boxShadow = "none";
+            });
+        </script>
+        {% endfor %}
+
+        <button type="submit" style="
+            background-color: #7209B7;
+            color: #E0AAFF;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 24px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            text-shadow: 0 0 15px #C77DFF;
+        "
+        onmouseover="this.style.backgroundColor='#560BAD'; this.style.boxShadow='0 0 20px #C77DFF';"
+        onmouseout="this.style.backgroundColor='#7209B7'; this.style.boxShadow='none';">
+            Create Auction
+        </button>
+    </form>
+
+    <div style="text-align: center; margin-top: 20px;">
+        <a href="{% url 'auctioneer_dashboard' %}" style="
+            color: #9D4EDD;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        "
+        onmouseover="this.style.color='#C77DFF';"
+        onmouseout="this.style.color='#9D4EDD';">
+            Back to Dashboard
+        </a>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        let deadlineInput = document.getElementById("id_deadline");
+        if (deadlineInput) {
+            deadlineInput.setAttribute("min", new Date().toISOString().slice(0, 16)); // Prevent past dates
+        }
+    });
+</script>
+{% endblock %}

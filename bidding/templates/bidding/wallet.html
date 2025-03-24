@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Wallet</title>
+    <style>
+        body {
+            background-color: #12122b;
+            color: #e0aaff;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            height: 100vh;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+        }
+
+        .wallet-container {
+            background: #1A1A40;
+            border-radius: 15px;
+            padding: 30px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 0 20px rgba(157, 78, 221, 0.7);
+            text-align: center;
+        }
+
+        h2 {
+            margin-bottom: 15px;
+            color: #9D4EDD;
+            text-shadow: 0 0 15px #9D4EDD;
+        }
+
+        .balance-card {
+            background: #282846;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 10px;
+            box-shadow: 0 0 10px rgba(108, 92, 231, 0.6);
+        }
+
+        .balance-amount {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #4CC9F0;
+            text-shadow: 0 0 8px #4CC9F0;
+        }
+
+        .locked-balance {
+            color: #F72585;
+            text-shadow: 0 0 8px #F72585;
+        }
+
+        .wallet-footer {
+            margin-top: 20px;
+            color: #888;
+            font-size: 0.9rem;
+        }
+
+        a {
+            color: #4CC9F0;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            color: #F72585;
+        }
+    </style>
+</head>
+<body>
+    <div class="wallet-container">
+        <h2>Welcome, {{ user.username }}!</h2>
+        <h3>Your Wallet</h3>
+
+        <div class="balance-card">
+            <p><strong>Available Balance:</strong></p>
+            <p class="balance-amount">₹{{ wallet.balance }}</p>
+        </div>
+
+        <div class="balance-card">
+            <p><strong>Locked Balance:</strong></p>
+            <p class="balance-amount locked-balance">₹{{ wallet.locked_balance }}</p>
+        </div>
+
+        <div class="wallet-footer">
+            <p>Need help? <a href="#">Contact Support</a></p>
+        </div>
+    </div>
+</body>
+</html>

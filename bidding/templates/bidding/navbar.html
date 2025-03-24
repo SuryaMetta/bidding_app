@@ -1,0 +1,127 @@
+<nav class="navbar" style="
+    width: 100%;
+    background: linear-gradient(135deg, #1A1A40, #3A0CA3);
+    color: #ffffff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    padding: 12px 40px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.9);
+">
+    {% if request.user.is_authenticated %}
+        <div style="
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        ">
+            <div style="
+                font-weight: bold;
+                color: #E0AAFF;
+                background-color: #240046;
+                padding: 12px 20px;
+                border-radius: 8px;
+                border: 2px solid #9D4EDD;
+                box-shadow: 0 0 12px #9D4EDD;
+            ">💰 Wallet: ₹{{ wallet.balance }}</div>
+            <a href="{% url 'add_money' %}" style="
+                background-color: #41077e;
+                color: #001F3F;
+                text-decoration: none;
+                padding: 12px 24px;
+                border-radius: 8px;
+                font-weight: bold;
+                border: 2px solid #310d81;
+                box-shadow: 0 0 15px #1c0c82;
+                transition: background 0.3s ease, box-shadow 0.3s ease;
+            " onmouseover="this.style.backgroundColor='#00C897'; this.style.boxShadow='0 0 25px #00FFAB';"
+               onmouseout="this.style.backgroundColor='#00FFAB'; this.style.boxShadow='0 0 15px #00FFAB';">
+                ➕ Add Money
+            </a>
+        </div>
+    {% endif %}
+
+    <ul style="
+        display: flex;
+        list-style: none;
+        padding: 0;
+        margin: 0 auto;
+        gap: 15px;
+        align-items: center;
+    ">
+        <li><a href="{% url 'home' %}" style="
+            color: #9D4EDD;
+            text-decoration: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            background-color: transparent;
+            border: 2px solid #4A148C;
+            transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+        " onmouseover="this.style.backgroundColor='#4A148C'; this.style.boxShadow='0 0 15px #9D4EDD';"
+           onmouseout="this.style.backgroundColor='transparent'; this.style.boxShadow='none';">🏠 Home</a></li>
+
+        <li><a href="{% url 'create_auction' %}" style="
+            color: #9D4EDD;
+            text-decoration: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            background-color: transparent;
+            border: 2px solid #4A148C;
+            transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+        " onmouseover="this.style.backgroundColor='#4A148C'; this.style.boxShadow='0 0 15px #9D4EDD';"
+           onmouseout="this.style.backgroundColor='transparent'; this.style.boxShadow='none';">➕ Create Auction</a></li>
+
+        <li><a href="{% url 'auctioneer_dashboard' %}" style="
+            color: #9D4EDD;
+            text-decoration: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            background-color: transparent;
+            border: 2px solid #4A148C;
+            transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+        " onmouseover="this.style.backgroundColor='#4A148C'; this.style.boxShadow='0 0 15px #9D4EDD';"
+           onmouseout="this.style.backgroundColor='transparent'; this.style.boxShadow='none';">📊 Dashboard</a></li>
+
+        {% if request.user.is_authenticated %}
+            <li><a href="{% url 'profile' %}" style="
+                color: #E0AAFF;
+                text-decoration: none;
+                padding: 12px 24px;
+                border-radius: 8px;
+                background-color: #4A148C;
+                border: 2px solid #9D4EDD;
+                transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+            " onmouseover="this.style.backgroundColor='#7209B7'; this.style.boxShadow='0 0 15px #E0AAFF';"
+               onmouseout="this.style.backgroundColor='#4A148C'; this.style.boxShadow='none';">👤 Profile</a></li>
+
+            <li><a href="{% url 'logout' %}" style="
+                background-color: #3b0918;
+                color: #ff4d4d;
+                text-decoration: none;
+                padding: 12px 24px;
+                border-radius: 8px;
+                transition: background 0.3s ease, transform 0.3s ease;
+            " onmouseover="this.style.backgroundColor='#7209B7'; this.style.boxShadow='0 0 15px #E0AAFF';"
+               onmouseout="this.style.backgroundColor='#3b0918'; this.style.boxShadow='none';">🚪 Logout</a></li>
+        {% else %}
+            <li><a href="{% url 'login' %}" style="
+                color: #9D4EDD;
+                text-decoration: none;
+                padding: 12px 24px;
+                border-radius: 8px;
+                background-color: transparent;
+                border: 2px solid #4A148C;
+                transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+            " onmouseover="this.style.backgroundColor='#4A148C'; this.style.boxShadow='0 0 15px #9D4EDD';"
+               onmouseout="this.style.backgroundColor='transparent'; this.style.boxShadow='none';">🔑 Login</a></li>
+        {% endif %}
+    </ul>
+</nav>
+
+<div class="main-content" style="
+    margin-top: 90px;
+    padding: 20px;
+"></div>

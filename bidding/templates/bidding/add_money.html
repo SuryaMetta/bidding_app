@@ -1,0 +1,62 @@
+{% extends 'bidding/base.html' %}
+
+{% block content %}
+<div class="wallet-container" style="
+    max-width: 400px; 
+    margin: 100px auto; 
+    background: #1e1e2f; 
+    border-radius: 15px; 
+    padding: 30px; 
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.9);
+    text-align: center;
+    color: #ffffff;
+">
+    <h2 style="
+        color: #a855f7;
+        margin-bottom: 20px;
+        border-bottom: 2px solid #a855f7;
+        padding-bottom: 10px;
+    ">
+        Add Money to Wallet
+    </h2>
+    <form method="post">
+        {% csrf_token %}
+
+        <label for="amount" style="
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #c084fc;
+        ">
+            Amount:
+        </label>
+        <input type="number" name="amount" required style="
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #7c3aed;
+            background-color: #2a2a40;
+            color: #ffffff;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            outline: none;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.7);
+        ">
+
+        <button type="submit" style="
+            width: 100%;
+            background-color: #7c3aed;
+            color: #ffffff;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s ease;
+        "
+        onmouseover="this.style.backgroundColor='#a855f7'"
+        onmouseout="this.style.backgroundColor='#7c3aed'">
+            Add Money
+        </button>
+    </form>
+</div>
+{% endblock %}

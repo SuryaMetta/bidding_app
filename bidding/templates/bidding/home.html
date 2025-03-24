@@ -1,0 +1,113 @@
+{% extends "bidding/base.html" %}
+{% load static %}
+
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Online Bidding{% endblock %}</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+    {% block extra_css %}{% endblock %}  
+</head>
+
+{% block content %}
+<div style="
+    background: linear-gradient(135deg, #10002B, #240046, #3A0CA3);
+    min-height: 100vh;
+    padding: 40px;
+    box-shadow: inset 0 0 40px rgba(58, 12, 163, 0.8);">
+
+    <div style="
+        background: linear-gradient(135deg, #1A1A40, #3A0CA3);
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 4px 15px rgba(58, 12, 163, 0.8);
+        color: #E0AAFF;
+        margin: 20px;">
+
+        <h1 style="
+            text-align: center;
+            color: #9D4EDD;
+            margin-bottom: 25px;">
+            Welcome to the Online Bidding System
+        </h1>
+
+        <!-- Wallet Section -->
+        {% if user.is_authenticated %}
+            <div style="
+                background-color: #240046;
+                border: 2px solid #9D4EDD;
+                border-radius: 10px;
+                padding: 20px;
+                margin-bottom: 30px;
+                text-align: center;
+                box-shadow: 0 0 15px rgba(144, 12, 163, 0.8);">
+                <h3 style="color: #C77DFF; margin-bottom: 10px;">Your Wallet</h3>
+                <div style="display: flex; justify-content: space-around; color: #E0AAFF;">
+                    <p><strong>Available Balance:</strong> ₹{{ wallet.balance }}</p>
+                    <p><strong>Locked Balance:</strong> ₹{{ wallet.locked_balance }}</p>
+                </div>
+            </div>
+        {% else %}
+            <p style="
+                text-align: center;
+                color: #E0AAFF;
+                background-color: #560BAD;
+                padding: 10px;
+                border-radius: 8px;
+                box-shadow: 0 0 10px rgba(144, 12, 163, 0.8);">
+                Please <a href="{% url 'login' %}" style="color: #C77DFF; text-decoration: none; font-weight: bold;">log in</a> to see your wallet.
+            </p>
+        {% endif %}
+
+        <!-- Current Auctions Section -->
+        <h2 style="
+            text-align: center;
+            color: #9D4EDD;
+            margin-top: 30px;">
+            Current Auctions
+        </h2>
+
+        <ul style="
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            list-style: none;
+            padding: 0;">
+            {% if auctions %}
+                {% for auction in auctions %}
+                    <li style="
+                        background-color: #240046;
+                        border: 2px solid #9D4EDD;
+                        border-radius: 12px;
+                        padding: 20px;
+                        text-align: center;
+                        box-shadow: 0 0 15px rgba(114, 9, 183, 0.8);
+                        transition: transform 0.3s ease;"
+                    onmouseover="this.style.transform='scale(1.05)';"
+                    onmouseout="this.style.transform='scale(1)';">
+                        <a href="{% url 'auction_detail' auction.id %}" style="
+                            color: #C77DFF;
+                            text-decoration: none;
+                            font-weight: bold;
+                            transition: color 0.3s ease;"
+                        onmouseover="this.style.color='#E0AAFF';"
+                        onmouseout="this.style.color='#C77DFF';">
+                            {{ auction.title }}
+                        </a>
+                        <p style="color: #E0AAFF;"><strong>Starting Price:</strong> ₹{{ auction.starting_price }}</p>
+                    </li>
+                {% endfor %}
+            {% else %}
+                <li style="
+                    color: #E0AAFF;
+                    text-align: center;
+                    padding: 20px;
+                    background-color: #560BAD;
+                    border-radius: 10px;
+                    box-shadow: 0 0 10px rgba(144, 12, 163, 0.8);">
+                    No active auctions at the moment.
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+</div>
+{% endblock %}

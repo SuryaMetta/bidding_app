@@ -1,0 +1,56 @@
+{% extends "bidding/base.html" %}
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+    <div style="background-color: #1a0033; color: #e0b3ff; padding: 20px; border-radius: 15px; box-shadow: 0 0 20px #8a2be2;">
+        <h1 style="text-align: center; color: #a855f7;">Dashboard</h1>
+
+        <!-- Section: Your Created Auctions -->
+        <h2 style="border-bottom: 2px solid #a855f7; padding-bottom: 5px;">Your Created Auctions</h2>
+        {% if created_auctions %}
+            <ul style="list-style: none; padding-left: 0;">
+                {% for auction in created_auctions %}
+                    <li style="background-color: #240046; padding: 10px; margin-bottom: 5px; border-radius: 8px;">
+                        <a href="{% url 'auction_detail' auction.id %}" style="color: #d580ff; text-decoration: none;">
+                            {{ auction.title }}</a>
+                        - Starting Price: ₹{{ auction.starting_price }}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No auctions created yet.</p>
+        {% endif %}
+
+        <!-- Section: Ongoing Auctions -->
+        <h2 style="border-bottom: 2px solid #a855f7; padding-bottom: 5px;">Ongoing Auctions</h2>
+        {% if ongoing_auctions %}
+            <ul style="list-style: none; padding-left: 0;">
+                {% for auction in ongoing_auctions %}
+                    <li style="background-color: #240046; padding: 10px; margin-bottom: 5px; border-radius: 8px;">
+                        <a href="{% url 'auction_detail' auction.id %}" style="color: #d580ff; text-decoration: none;">
+                            {{ auction.title }}</a>
+                        - Starting Price: ₹{{ auction.starting_price }}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No ongoing auctions at the moment.</p>
+        {% endif %}
+
+        <!-- Section: Your Bids -->
+        <h2 style="border-bottom: 2px solid #a855f7; padding-bottom: 5px;">Your Bids</h2>
+        {% if my_bids %}
+            <ul style="list-style: none; padding-left: 0;">
+                {% for bid in my_bids %}
+                    <li style="background-color: #240046; padding: 10px; margin-bottom: 5px; border-radius: 8px;">
+                        <a href="{% url 'auction_detail' bid.auction.id %}" style="color: #d580ff; text-decoration: none;">
+                            {{ bid.auction.title }}</a>
+                        - Your Bid: ₹{{ bid.amount }}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>You haven't placed any bids yet.</p>
+        {% endif %}
+    </div>
+{% endblock %}

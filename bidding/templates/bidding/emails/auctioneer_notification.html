@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Auction Closed - {{ auction.title }}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .email-container {
+            background-color: #ffffff;
+            border: 2px solid #4A3F8C;
+            border-radius: 12px;
+            padding: 20px;
+            max-width: 600px;
+            margin: 0 auto;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            background-color: #4A3F8C;
+            color: #ffffff;
+            text-align: center;
+            padding: 10px 0;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            font-size: 20px;
+        }
+        .content {
+            padding: 15px 20px;
+        }
+        .footer {
+            text-align: center;
+            font-size: 12px;
+            color: #777;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <div class="header">
+            Auction Closed: {{ auction.title }}
+        </div>
+        <div class="content">
+            <p>Dear {{ auction.auctioneer.username }},</p>
+            <p>
+                The auction <b>"{{ auction.title }}"</b> has been closed.
+                {% if auction.winner %}
+                    The winner is <b>{{ auction.winner.username }}</b> with a bid of ₹{{ auction.get_winning_bid.amount }}.
+                {% else %}
+                    Unfortunately, there were no successful bids.
+                {% endif %}
+            </p>
+            <p>Thank you for using our platform!</p>
+        </div>
+        <div class="footer">
+            &copy; {{ current_year }} Online Bidding System | All Rights Reserved
+        </div>
+    </div>
+</body>
+</html>

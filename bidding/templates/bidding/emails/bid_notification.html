@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>New Bid on Your Auction</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            background-color: #f4f4f4; 
+            padding: 20px; 
+        }
+        .email-container {
+            max-width: 600px; 
+            background-color: #ffffff; 
+            margin: 0 auto; 
+            padding: 20px; 
+            border-radius: 10px; 
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-left: 5px solid #4CAF50;
+        }
+        h2 { color: #4CAF50; text-align: center; }
+        .content { 
+            padding: 10px 0;
+            line-height: 1.6;
+        }
+        .footer {
+            margin-top: 20px;
+            text-align: center;
+            color: #888;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <h2>📢 New Bid Alert!</h2>
+        <div class="content">
+            <p>A new bid has been placed on your auction: <strong>{{ auction.title }}</strong></p>
+            <p><b>Bidder:</b> {{ bidder.username }}</p>
+            <p>Check your <a href="{{ dashboard_link }}" style="color: #4CAF50; text-decoration: none; font-weight: bold;">auction dashboard</a> for details.</p>
+        </div>
+        <div class="footer">
+            Thank you for using our platform! 🚀
+        </div>
+    </div>
+</body>
+</html>

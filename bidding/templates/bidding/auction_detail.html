@@ -1,0 +1,96 @@
+{% extends "bidding/base.html" %}
+{% block title %}Auction Detail{% endblock %}
+{% block content %}
+    <div class="auction-detail" style="max-width: 800px; margin: auto; padding: 20px; background: #1a1a2e; color: #e0e0e0; border-radius: 15px; box-shadow: 0 4px 20px rgba(138, 43, 226, 0.8);">
+        <h1 class="title" style="color: #8a2be2; text-align: center;">{{ auction.title }}</h1>
+        <p class="price"><strong>Starting Price:</strong> ₹{{ auction.starting_price }}</p>
+        <p class="description">{{ auction.description }}</p>
+        <p class="deadline"><strong>Auction Ends At:</strong> {{ auction.deadline|date:"F d, Y H:i:s" }}</p>
+        <p class="time-remaining" style="color: #d1a3ff;"><strong>Time Remaining:</strong> <span id="time-remaining"></span></p>
+
+        <div class="bids-section" style="background: #2a2a4d; padding: 15px; border-radius: 10px; margin-top: 15px;">
+            <h2 style="color: #8a2be2;">Bids:</h2>
+            <ul class="bid-list">
+                {% for bid in auction.bid_set.all %}
+                    <li class="bid-item" style="color: #d1a3ff;">{{ bid.bidder.username }} - ₹{{ bid.amount }}</li>
+                {% empty %}
+                    <li style="color: #888;">No bids yet.</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="highest-bid" style="margin-top: 20px; background: #3a2d5d; padding: 10px; border-radius: 10px;">
+            <h3>Current Highest Bid:</h3>
+            <p>{% if highest_bid %}₹{{ highest_bid.amount }} by {{ highest_bid.bidder.username }}{% else %}<strong>No bids placed yet.</strong>{% endif %}</p>
+        </div>
+
+        {% if not auction.is_active %}
+            <p class="alert alert-danger" style="color: #ff4d4d;"><strong>This auction has ended.</strong></p>
+        {% elif auction.is_canceled %}
+            <p class="alert alert-warning" style="color: #ffa500;"><strong>This auction has been canceled.</strong></p>
+        {% else %}
+            {% if request.user == auction.auctioneer %}
+                <div class="cancel-close-buttons" style="display: flex; gap: 15px; margin-top: 20px;">
+                    <form method="post" action="{% url 'cancel_auction' auction.id %}" style="flex: 1;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn" 
+                                style="background: #ff4d4d; color: #fff; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer; 
+                                transition: background 0.3s ease, box-shadow 0.3s ease;"
+                                onmouseover="this.style.background='#b30000'; this.style.boxShadow='0 0 20px #ff4d4d';"
+                                onmouseout="this.style.background='#ff4d4d'; this.style.boxShadow='none';">
+                            Cancel Auction
+                        </button>
+                    </form>
+
+                    <form method="post" action="{% url 'close_auction' auction.id %}" style="flex: 1;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn" 
+                                style="background: #00bfff; color: #fff; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer; 
+                                transition: background 0.3s ease, box-shadow 0.3s ease;"
+                                onmouseover="this.style.background='#007acc'; this.style.boxShadow='0 0 20px #00bfff';"
+                                onmouseout="this.style.background='#00bfff'; this.style.boxShadow='none';">
+                            Close Auction
+                        </button>
+                    </form>
+                </div>
+            {% endif %}
+        {% endif %}
+
+        {% if auction.closed and request.user == auction.winner %}
+            <form method="post" action="{% url 'confirm_receipt' auction.id %}" style="margin-top: 20px;">
+                {% csrf_token %}
+                <button type="submit" class="btn"
+                        style="background: #32cd32; color: #fff; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer; 
+                        box-shadow: 0 0 15px rgba(50, 205, 50, 0.8); transition: background 0.3s ease, box-shadow 0.3s ease;"
+                        onmouseover="this.style.background='#228b22'; this.style.boxShadow='0 0 20px #32cd32';"
+                        onmouseout="this.style.background='#32cd32'; this.style.boxShadow='none';">
+                    Confirm Receipt
+                </button>
+            </form>
+        {% endif %}
+    </div>
+
+    <script>
+        function updateTimeRemaining() {
+            const deadline = new Date("{{ auction.deadline|date:'Y-m-d H:i:s' }}").getTime();
+            const now = new Date().getTime();
+            const timeLeft = deadline - now;
+
+            if (timeLeft <= 0) {
+                document.getElementById("time-remaining").innerHTML = "Auction has ended";
+                return;
+            }
+
+            const hours = Math.floor((timeLeft / (1000 * 60 * 60)) % 24);
+            const minutes = Math.floor((timeLeft / (1000 * 60)) % 60);
+            const seconds = Math.floor((timeLeft / 1000) % 60);
+
+            document.getElementById("time-remaining").innerHTML = 
+                `<span style="color: #8a2be2;">${hours}h ${minutes}m ${seconds}s</span>`;
+
+            setTimeout(updateTimeRemaining, 1000);
+        }
+
+        updateTimeRemaining();
+    </script>
+{% endblock %}

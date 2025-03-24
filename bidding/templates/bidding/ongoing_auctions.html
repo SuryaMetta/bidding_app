@@ -1,0 +1,69 @@
+{% extends "bidding/base.html" %}
+{% block title %}Ongoing Auctions{% endblock %}
+
+{% block content %}
+    <h1 style="
+        text-align: center;
+        color: #E0AAFF;
+        margin-bottom: 30px;
+        text-shadow: 0 0 12px #9D4EDD;
+    ">
+        🚀 Ongoing Auctions
+    </h1>
+
+    {% if auctions %}
+        <div style="
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        ">
+            {% for auction in auctions %}
+                <div style="
+                    background-color: #1A1A40;
+                    border: 2px solid #9D4EDD;
+                    border-radius: 12px;
+                    box-shadow: 0 0 15px rgba(157, 78, 221, 0.5);
+                    padding: 20px;
+                    text-align: center;
+                    transition: transform 0.3s ease, box-shadow 0.3s ease;
+                "
+                onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 0 25px rgba(224, 170, 255, 0.8)';"
+                onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 0 15px rgba(157, 78, 221, 0.5)';">
+                    <h3 style="
+                        color: #E0AAFF;
+                        margin-bottom: 10px;
+                    ">
+                        <a href="{% url 'auction_detail' auction.id %}" 
+                        style="
+                            text-decoration: none;
+                            color: #9D4EDD;
+                            transition: color 0.3s ease;
+                        "
+                        onmouseover="this.style.color='#E0AAFF';"
+                        onmouseout="this.style.color='#9D4EDD';">
+                            {{ auction.title }}
+                        </a>
+                    </h3>
+
+                    <p style="
+                        color: #ffffff;
+                        font-size: 16px;
+                    ">
+                        Starting Price: <strong style="color: #4CC9F0;">₹{{ auction.starting_price }}</strong>
+                    </p>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p style="
+            text-align: center;
+            color: #ffffff;
+            background-color: #3A0CA3;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 0 12px rgba(58, 12, 163, 0.8);
+        ">
+            No ongoing auctions at the moment.
+        </p>
+    {% endif %}
+{% endblock %}

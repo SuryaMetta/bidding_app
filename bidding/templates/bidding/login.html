@@ -1,0 +1,107 @@
+{% extends "bidding/base.html" %}
+{% load static %}
+
+{% block content %}
+<div style="
+    background: linear-gradient(135deg, #1A1A40, #3A0CA3);
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 4px 15px rgba(58, 12, 163, 0.8);
+    color: #E0AAFF;
+    max-width: 400px;
+    margin: 50px auto;
+    text-align: center;
+">
+
+    <h2 style="
+        color: #9D4EDD;
+        text-shadow: 0 0 12px #9D4EDD;
+        margin-bottom: 25px;
+    ">
+        Login
+    </h2>
+
+    {% if messages %}
+        <ul style="
+            background-color: #560BAD;
+            border: 2px solid #7209B7;
+            border-radius: 8px;
+            padding: 10px;
+            list-style: none;
+            box-shadow: 0 0 10px rgba(114, 9, 183, 0.8);
+        ">
+            {% for message in messages %}
+                <li style="color: #FF4D6D;">{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <form method="POST" action="{% url 'login' %}" style="
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        background-color: #240046;
+        border: 2px solid #7209B7;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 0 15px rgba(144, 12, 163, 0.8);
+    ">
+        {% csrf_token %}
+
+        <div style="text-align: left;">
+            <label for="username" style="color: #C77DFF; font-weight: bold;">Username:</label>
+            <input type="text" id="username" name="username" required
+                style="
+                    width: 100%;
+                    padding: 8px;
+                    background-color: #1A1A40;
+                    border: 2px solid #9D4EDD;
+                    border-radius: 8px;
+                    color: #E0AAFF;
+                ">
+        </div>
+
+        <div style="text-align: left;">
+            <label for="password" style="color: #C77DFF; font-weight: bold;">Password:</label>
+            <input type="password" id="password" name="password" required
+                style="
+                    width: 100%;
+                    padding: 8px;
+                    background-color: #1A1A40;
+                    border: 2px solid #9D4EDD;
+                    border-radius: 8px;
+                    color: #E0AAFF;
+                ">
+        </div>
+
+        <button type="submit" style="
+            background-color: #560BAD;
+            color: #E0AAFF;
+            padding: 10px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        "
+        onmouseover="this.style.backgroundColor='#9D4EDD';"
+        onmouseout="this.style.backgroundColor='#560BAD';">
+            Login
+        </button>
+    </form>
+
+    <p style="margin-top: 20px; color: #E0AAFF;">
+        Don't have an account? 
+        <a href="{% url 'register' %}" style="
+            color: #C77DFF;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        "
+        onmouseover="this.style.color='#E0AAFF';"
+        onmouseout="this.style.color='#C77DFF';">
+            Sign up
+        </a>
+    </p>
+</div>
+{% endblock %}

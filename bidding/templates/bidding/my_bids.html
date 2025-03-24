@@ -1,0 +1,84 @@
+{% extends "bidding/base.html" %}
+
+{% block title %}My Bids{% endblock %}
+
+{% block content %}
+<div style="
+    background: linear-gradient(135deg, #1A1A40, #3A0CA3);
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 4px 15px rgba(58, 12, 163, 0.8);
+    color: #E0AAFF;
+    max-width: 600px;
+    margin: 50px auto;
+    text-align: center;
+">
+
+    <h2 style="
+        color: #9D4EDD;
+        text-shadow: 0 0 12px #9D4EDD;
+        margin-bottom: 25px;
+    ">
+        My Bids
+    </h2>
+
+    <ul style="
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    ">
+        {% for bid in bids %}
+            <li style="
+                background-color: #240046;
+                border: 2px solid #7209B7;
+                border-radius: 10px;
+                margin-bottom: 12px;
+                padding: 15px;
+                box-shadow: 0 0 10px rgba(144, 12, 163, 0.8);
+            ">
+                <a href="{% url 'auction_detail' bid.auction.id %}" style="
+                    color: #C77DFF;
+                    text-decoration: none;
+                    font-weight: bold;
+                    transition: color 0.3s ease;
+                "
+                onmouseover="this.style.color='#E0AAFF';"
+                onmouseout="this.style.color='#C77DFF';">
+                    {{ bid.auction.title }}
+                </a>
+                <p style="margin-top: 8px;">
+                    <strong>Bid Amount:</strong> ₹{{ bid.amount }}
+                </p>
+            </li>
+        {% empty %}
+            <li style="
+                background-color: #560BAD;
+                border: 2px solid #7209B7;
+                border-radius: 10px;
+                padding: 15px;
+                color: #FF4D6D;
+                box-shadow: 0 0 10px rgba(114, 9, 183, 0.8);
+            ">
+                You haven't placed any bids yet.
+            </li>
+        {% endfor %}
+    </ul>
+
+    <a href="{% url 'bidding_dashboard' %}" 
+       style="
+           display: inline-block;
+           margin-top: 20px;
+           padding: 10px 15px;
+           background-color: #560BAD;
+           color: #E0AAFF;
+           text-decoration: none;
+           border-radius: 8px;
+           cursor: pointer;
+           transition: background-color 0.3s ease;
+       "
+       onmouseover="this.style.backgroundColor='#9D4EDD';"
+       onmouseout="this.style.backgroundColor='#560BAD';">
+       ← Back to Home
+    </a>
+</div>
+{% endblock %}

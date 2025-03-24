@@ -1,0 +1,56 @@
+<div class="dashboard-container" style="
+    background: linear-gradient(135deg, #1A1A40, #3A0CA3);
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 4px 15px rgba(58, 12, 163, 0.8);
+    color: #E0AAFF;
+    margin: 20px;
+">
+
+    <h2 style="
+        color: #9D4EDD;
+        text-align: center;
+        margin-bottom: 20px;
+        text-shadow: 0 0 10px #9D4EDD;
+    ">
+        Ongoing Auctions
+    </h2>
+
+    <ul class="auction-list" style="list-style: none; padding: 0;">
+        {% for auction in auctions %}
+            <li class="auction-card" style="
+                background: #3C096C;
+                border: 1px solid #5A189A;
+                border-radius: 12px;
+                padding: 15px;
+                margin-bottom: 10px;
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+            "
+            onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 0 15px #9D4EDD';"
+            onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none';">
+                <a href="{% url 'auction_detail' auction.id %}" style="
+                    color: #E0AAFF;
+                    text-decoration: none;
+                    font-weight: bold;
+                    font-size: 18px;
+                ">
+                    {{ auction.title }}
+                </a>
+                <p style="
+                    color: #C77DFF;
+                    margin-top: 5px;
+                ">
+                    <strong>Starting Price:</strong> ₹{{ auction.starting_price }}
+                </p>
+            </li>
+        {% empty %}
+            <p class="no-auctions" style="
+                color: #9D4EDD;
+                text-align: center;
+                padding: 20px;
+            ">
+                No ongoing auctions.
+            </p>
+        {% endfor %}
+    </ul>
+</div>
